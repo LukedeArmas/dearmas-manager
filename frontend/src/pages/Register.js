@@ -1,6 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { FaUser } from 'react-icons/fa'
 import {toast} from 'react-toastify'
+import { useSelector, useDispatch  } from 'react-redux'
+import { register, reset } from '../features/auth/authSlice.js'
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +14,26 @@ const Register = () => {
   })
 
   const {name, email, password, confirmPassword} = formData
+
+  // Allows us to dispatch actions to reducer
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  // Allows us to get state from redux
+  const { user, isLoading, isSuccess, isError, message } = useSelector(state => state.auth)
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message)
+    }
+
+    if (isSuccess || user) {
+      navigate('/')
+    } else {
+      dispatch(reset())
+    }
+  }, [isError, isSuccess, user, message, navigate, dispatch])
+
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -23,16 +46,22 @@ const Register = () => {
     e.preventDefault()
     if (password !== confirmPassword) {
       toast.error('Passwords must match')
+    } else {
+      const userData = {
+        name,
+        email,
+        password
+      }
+
+      dispatch(register(userData))
     }
-    console.log(formData)
-    
   }
 
   return (
     <>
         <section className="heading">
           <h1>
-            <FaUser /> Register
+            <FaUser /> Register 
           </h1>
           <p>Please create an account</p>
         </section>
