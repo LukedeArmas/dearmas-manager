@@ -22,7 +22,7 @@ const CreateTask = () => {
     const [description, setDescription] = useState('')
 
     const navigate = useNavigate()
-    const { isSuccess, isError, isLoading, message } = useSelector(state => state.task)
+    const { isSuccess, isError, isLoading, message } = useSelector(state => state.tasks)
 
     useEffect(() => {
         if (isError) {

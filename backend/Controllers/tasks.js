@@ -91,7 +91,6 @@ module.exports.deleteTask = async (req, res) => {
 // @auth    Private
 module.exports.updateTask = async (req, res) => {
     const { id } = req.params
-    const { product, description } = req.body
     const user = await User.findById(req.user.id)
     if (!user) {
         throw new CustomError(401, 'User does not exist')
@@ -105,9 +104,7 @@ module.exports.updateTask = async (req, res) => {
         throw new CustomError(401, 'No Authorization')
     }
 
-    task.product = product
-    task.description = description
-    const updatedTask = await task.save()
+    const updatedTask = await Task.findByIdAndUpdate(id, req.body, { new: true })
     
     res.json(updatedTask)
 }
