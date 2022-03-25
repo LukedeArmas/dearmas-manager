@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { reset, createTask } from '../features/tasks/taskSlice.js'
 import { toast } from 'react-toastify'
 import { css } from "@emotion/react";
-import ClipLoader from "react-spinners/ClipLoader";
+import ClipLoader from "react-spinners/ClipLoader"
+import Back from '../components/Back.js'
 
 const override = css`
   display: block;
@@ -53,6 +54,7 @@ const CreateTask = () => {
 
   return (
     <>
+    <Back url='/' />
         <section className="heading">
             <h1>Create New Task</h1>
             <p>Please fill out the form below</p>
