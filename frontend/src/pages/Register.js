@@ -4,6 +4,14 @@ import { FaUser } from 'react-icons/fa'
 import {toast} from 'react-toastify'
 import { useSelector, useDispatch  } from 'react-redux'
 import { register, reset } from '../features/auth/authSlice.js'
+import { css } from "@emotion/react";
+import ClipLoader from "react-spinners/ClipLoader";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  margin-top: 10rem;
+`;
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -26,7 +34,6 @@ const Register = () => {
     if (isError) {
       toast.error(message)
     }
-
     if (isSuccess || user) {
       navigate('/')
     } else {
@@ -55,6 +62,10 @@ const Register = () => {
 
       dispatch(register(userData))
     }
+  }
+
+  if (isLoading) {
+    return <ClipLoader css={override} size={150} />
   }
 
   return (

@@ -1,8 +1,18 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import {useNavigate} from 'react-router-dom';
 import { FaSignInAlt } from 'react-icons/fa'
 import {toast} from 'react-toastify'
 import { useSelector, useDispatch  } from 'react-redux'
-import { login } from '../features/auth/authSlice.js'
+import { login, reset } from '../features/auth/authSlice.js'
+import { css } from "@emotion/react";
+import ClipLoader from "react-spinners/ClipLoader";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  margin-top: 10rem;
+`;
+
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -12,9 +22,22 @@ const Login = () => {
 
   const {email, password} = formData
 
+  const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const { user, isLoading, isSuccess, message } = useSelector(state => state.auth)
+  const { user, isLoading, isSuccess, isError, message } = useSelector(state => state.auth)
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message)
+    }
+    if (isSuccess || user) {
+      navigate('/')
+    } else {
+      dispatch(reset())
+    }
+  }, [dispatch, isError, isSuccess, message, navigate, user ])
+
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -30,7 +53,10 @@ const Login = () => {
       password
     }
     dispatch(login(userData))
-    
+  }
+
+  if (isLoading) {
+    return <ClipLoader css={override} size={150} />
   }
 
   return (

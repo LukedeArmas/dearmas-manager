@@ -4,7 +4,7 @@ const User = require('../Models/user.js')
 const { createJsonWebToken } = require('../Utils/HelperFunctions.js')
 
 // Registers a user
-// @route   /users
+// @route   POST /users
 // @auth    Public
 module.exports.register = async (req, res) => {
     const { name, email, password } = req.body
@@ -39,7 +39,7 @@ module.exports.register = async (req, res) => {
 }
 
 // Logs in a user
-// @route   /users/login
+// @route   POST /users/login
 // @auth    Public
 module.exports.login = async (req, res) => {
     const {email, password} = req.body
@@ -64,7 +64,7 @@ module.exports.login = async (req, res) => {
 }
 
 // Get current user
-// @route   /users/me
+// @route  GET /users/me
 // @auth    Private
 module.exports.getMe = async (req, res) => {
     const user = {
