@@ -1,7 +1,9 @@
 import Back from '../components/Back.js'
+import CommentItem from '../components/CommentItem.js'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { reset, getTask, closeTask } from '../features/tasks/taskSlice.js'
+import { getComments, reset as commentsReset } from '../features/comments/commentSlice.js'
 import { css } from "@emotion/react";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useEffect } from 'react'
@@ -15,6 +17,10 @@ const override = css`
 
 const Task = () => {
     const { task, isSuccess, isLoading, isError, message} = useSelector(state => state.tasks)
+
+    const { comments, isLoading: commentsIsLoading } = useSelector(state => state.comments)
+
+
     const dispatch = useDispatch()
     const { taskId } = useParams()
     const navigate = useNavigate()
@@ -25,6 +31,7 @@ const Task = () => {
         }
 
         dispatch(getTask(taskId))
+        dispatch(getComments(taskId))
     // eslint-disable-next-line
     }, [taskId, isError, message])
 
@@ -35,7 +42,7 @@ const Task = () => {
     }
 
 
-    if (isLoading) {
+    if (isLoading || commentsIsLoading) {
         return <ClipLoader css={override} size={150} />
     }
 
@@ -61,7 +68,13 @@ const Task = () => {
                         <h3>Description of Issue</h3>
                         <p>{task.description}</p>
                     </div>
+                    <h2>Comments</h2>
                 </header>
+
+                {comments.map((comment) => (
+                    <CommentItem key={comment._id} comment={comment} />
+                ))}
+
                 {task.status !== 'closed' && (
                     <button className="btn btn-block btn-danger" onClick={onTicketClose}>Close Ticket</button>
                 )}
