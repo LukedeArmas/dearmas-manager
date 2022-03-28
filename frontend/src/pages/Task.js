@@ -3,8 +3,8 @@ import CommentItem from '../components/CommentItem.js'
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { reset, getTask, closeTask } from '../features/tasks/taskSlice.js'
-import { createComment, getComments, reset as commentsReset} from '../features/comments/commentSlice.js'
+import { getTask, closeTask } from '../features/tasks/taskSlice.js'
+import { createComment, getComments} from '../features/comments/commentSlice.js'
 import { css } from '@emotion/react'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { useEffect } from 'react'
@@ -35,7 +35,7 @@ margin-top: 10rem;
 const Task = () => {
     const [modalIsOpen, setIsOpen] = useState(false)
     const [commentText, setCommentText] = useState('')
-    const { task, isSuccess, isLoading, isError, message } =
+    const { task, isLoading, isError, message } =
         useSelector((state) => state.tasks)
 
     const { comments, isLoading: commentsIsLoading } =

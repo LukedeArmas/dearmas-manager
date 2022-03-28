@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
-import taskSlice, { getTasks, reset } from '../features/tasks/taskSlice.js'
+import { getTasks, reset } from '../features/tasks/taskSlice.js'
 import Back from '../components/Back.js'
 import TaskItem from '../components/TaskItem.js';
 import { css } from "@emotion/react";

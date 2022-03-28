@@ -15,7 +15,8 @@ function App() {
   return (
     <>
       <Router>
-        <div className="container">
+        <div className="grid place-items-center h-full bg-indigo-900">
+        <div className="w-11/12 md:w-10/12 mx-auto px-4 text-center bg-white rounded-lg h-5/6 overflow-auto no-scrollbar drop-shadow-2xl">
           <Header />
           <Routes>
           <Route path='/' element={<Home />} />
@@ -31,6 +32,7 @@ function App() {
             <Route path='/tasks/:taskId' element={<Task />} />
           </Route>
         </Routes>
+        </div>
         </div>
       </Router>
       <ToastContainer />

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import {useNavigate} from 'react-router-dom';
-import { FaSignInAlt } from 'react-icons/fa'
+import { FaRegEye, FaEyeSlash } from 'react-icons/fa'
 import {toast} from 'react-toastify'
 import { useSelector, useDispatch  } from 'react-redux'
 import { login, reset } from '../features/auth/authSlice.js'
@@ -19,6 +19,7 @@ const Login = () => {
     email: '',
     password: '',
   })
+  const [showPassword, setShowPassword] = useState(false)
 
   const {email, password} = formData
 
@@ -61,23 +62,29 @@ const Login = () => {
 
   return (
     <>
-        <section className="heading">
+        <section className="heading mt-10">
           <h1>
-            <FaSignInAlt /> Login
+            Login
           </h1>
-          <p>Please sign in</p>
         </section>
 
         <section className="form">
           <form onSubmit={onSubmit}>
             <div className="form-group">
-              <input type="email" className="form-control" id="email" name='email' value={email} onChange={onChange} placeholder="Enter email" required />
+              <input type="email" className="form-control shadow-group" id="email" name='email' value={email} onChange={onChange} placeholder="Enter email" required />
+            </div>
+            <div className="form-group relative">
+              <input type={ !showPassword ? 'password' : 'text' } className="form-control shadow-group" id="password" value={password} onChange={onChange} placeholder="Enter password" required />
+              <span className='icon' onClick={() => setShowPassword((prevState) => !prevState)}>
+                { !showPassword ? (
+                  <FaRegEye size={22} />
+                ) : (
+                  <FaEyeSlash size={22} />
+                ) }  
+              </span>
             </div>
             <div className="form-group">
-              <input type="password" className="form-control" id="password" value={password} onChange={onChange} placeholder="Enter password" required />
-            </div>
-            <div className="form-group">
-              <button type='submit' className="btn btn-block">Submit</button>
+              <button type='submit' className="btn-submit">Submit</button>
             </div>
           </form>
         </section>

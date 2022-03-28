@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FaUser } from 'react-icons/fa'
+import { FaRegEye, FaEyeSlash } from 'react-icons/fa'
 import {toast} from 'react-toastify'
 import { useSelector, useDispatch  } from 'react-redux'
 import { register, reset } from '../features/auth/authSlice.js'
@@ -20,6 +20,9 @@ const Register = () => {
     password: '',
     confirmPassword: ''
   })
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
 
   const {name, email, password, confirmPassword} = formData
 
@@ -70,29 +73,40 @@ const Register = () => {
 
   return (
     <>
-        <section className="heading">
-          <h1>
-            <FaUser /> Register 
-          </h1>
-          <p>Please create an account</p>
+        <section className="heading mt-6">
+          <h1>Register</h1>
         </section>
 
         <section className="form">
           <form onSubmit={onSubmit}>
             <div className="form-group">
-              <input type="text" className="form-control" id="name" value={name} onChange={onChange} placeholder="Enter name" required />
+              <input type="text" className="form-control shadow-group" id="name" value={name} onChange={onChange} placeholder="Enter name" required />
             </div>
             <div className="form-group">
-              <input type="email" className="form-control" id="email" value={email} onChange={onChange} placeholder="Enter email" required />
+              <input type="email" className="form-control shadow-group" id="email" value={email} onChange={onChange} placeholder="Enter email" required />
+            </div>
+            <div className="form-group relative">
+              <input type={ !showPassword ? 'password' : 'text' } className="form-control shadow-group" id="password" value={password} onChange={onChange} placeholder="Enter password" required />
+              <span className='icon' onClick={() => setShowPassword((prevState) => !prevState)}>
+                { !showPassword ? (
+                  <FaRegEye size={22} />
+                ) : (
+                  <FaEyeSlash size={22} />
+                ) }  
+              </span>
+            </div>
+            <div className="form-group relative">
+              <input type={ !showConfirmPassword ? 'password' : 'text' } className="form-control shadow-group" id="confirmPassword" value={confirmPassword} onChange={onChange} placeholder="Confirm password" required />
+              <span className='icon' onClick={() => setShowConfirmPassword((prevState) => !prevState)}>
+                { !showConfirmPassword ? (
+                  <FaRegEye size={22} />
+                ) : (
+                  <FaEyeSlash size={22} />
+                ) }  
+              </span>
             </div>
             <div className="form-group">
-              <input type="password" className="form-control" id="password" value={password} onChange={onChange} placeholder="Enter password" required />
-            </div>
-            <div className="form-group">
-              <input type="password" className="form-control" id="confirmPassword" value={confirmPassword} onChange={onChange} placeholder="Confirm password" required />
-            </div>
-            <div className="form-group">
-              <button type='submit' className="btn btn-block">Submit</button>
+              <button type='submit' className="btn-submit">Submit</button>
             </div>
           </form>
         </section>
