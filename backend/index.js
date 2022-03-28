@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path')
 const dotenv = require('dotenv').config()
 const app = express()
 const connectDatabase = require('./Config/db.js')
@@ -16,12 +17,22 @@ app.use('/tasks', taskRoutes)
 app.use('/tasks/:id/comments', commentRoutes)
 
 
+// Add frontend. Need to send the frontend build folder since create-react-app cannot run on server automatically
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../frontend/build')))
+
+    app.get('*', (req, res) => res.sendFile(__dirname, '../', 'frontend', 'build', 'index.html'))
+} else {
+    app.get('/', (req, res) => {
+        res.json({ message: 'Task Tracker'})
+    })
+}
+
 app.get('*', (req, res) => {
     throw new CustomError(404, 'Page does not exist')
 })
 
 app.use(errorHandler)
-
 
 const port = process.env.PORT || 5000
 app.listen(port, () => console.log(`Listening on port ${port}`))
