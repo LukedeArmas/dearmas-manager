@@ -10,10 +10,10 @@ const Home = () => {
         </section>
 
         <Link to='/new-task' className='btn btn-reverse btn-block'>
-            <FaQuestionCircle /> Create Ticket
+            <FaQuestionCircle /> Create Task
         </Link>
         <Link to='/tasks' className='btn btn-block'>
-            <FaTicketAlt /> View Tickets
+            <FaTicketAlt /> View Tasks
         </Link>
     </>
   )
