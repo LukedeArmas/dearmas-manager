@@ -13,7 +13,7 @@ import { FaPlus } from 'react-icons/fa'
 
 const customStyles = {
 content: {
-    width: '600px',
+    width: '60vw',
     top: '50%',
     left: '50%',
     right: 'auto',
@@ -81,33 +81,35 @@ const Task = () => {
 
     return (
         <>
-        <div className='ticket-page max-w-[900px] mx-auto my-10'>
+        <div className='ticket-page max-w-[900px] mx-auto mt-10'>
             <header className='ticket-head'>
             <h2>
-                Task ID: {task._id}
-                <span
-                className={`status status-${task.status}`}>
-                {task.status}
-                </span>
+                <span>Ticket ID Number: <span className='font-normal'>{task._id}</span></span>
+                <div className="flex justify-center items-center gap-1.5">
+                    <div className={`w-2.5 h-2.5 mt-0.5 rounded-full bg-black status-${task.status}`}></div> <span>{ task.status && task.status.charAt(0).toUpperCase() + task.status.substring(1,task.status.length)}</span>
+                </div>
             </h2>
             <h3>
-                Date Submitted:{' '}
-                {new Date(task.createdAt).toLocaleString('en-US')}
+                Date/Time Recorded:{' '}
+                <span className='font-normal whitespace-nowrap'>{new Date(task.createdAt).toLocaleString('en-US')}</span>
             </h3>
-            <h3>Product: {task.product}</h3>
+            <h3>Product Type: <span className='font-normal'>{task.product}</span></h3>
             <hr />
-            <div className='ticket-desc'>
-                <h3>Description of Issue</h3>
+            <div className='ticket-desc shadow-md rounded-lg'>
+                <h3>Issue Description</h3>
                 <p>{task.description}</p>
             </div>
-            <h2>Comments</h2>
             </header>
 
-            {task.status !== 'closed' && (
-            <button onClick={openModal} className='btn'>
-                <FaPlus /> Add Note
-            </button>
-            )}
+            <div className="flex justify-between items-center mb-5 mt-8">
+                <h2 className='text-xl'>Comments</h2>
+                {task.status !== 'closed' && (
+                <button onClick={openModal} className='btn whitespace-nowrap inline-flex items-center justify-center px-4 py-2 rounded-md font-medium text-white bg-indigo-800 hover:bg-indigo-900 align-middle'>
+                    <FaPlus /> Add Comment
+                </button>
+                )}
+            </div>
+            
 
             <Modal
             isOpen={modalIsOpen}
@@ -118,7 +120,7 @@ const Task = () => {
             <button
                 className='btn-close'
                 onClick={closeModal}>
-                X
+                x
             </button>
             <form onSubmit={onCommentSubmit}>
                 <div className='form-group'>
@@ -133,7 +135,7 @@ const Task = () => {
                     }></textarea>
                 </div>
                 <div className='form-group'>
-                <button className='btn' type='submit'>
+                <button className='btn-submit' type='submit'>
                     Submit
                 </button>
                 </div>
@@ -149,7 +151,7 @@ const Task = () => {
 
             {task.status !== 'closed' && (
             <button
-                className='btn btn-block btn-danger'
+                className='btn-submit btn-red'
                 onClick={onTicketClose}>
                 Close Ticket
             </button>

@@ -48,7 +48,6 @@ module.exports.login = async (req, res) => {
     if (!email || !password) {
         throw new CustomError(400,'Please include all fields')
     }
-
     // Find if the user already exists
     const user = await User.findOne({ email })
     if (!user || !(await bcrypt.compare(password, user.password))) {

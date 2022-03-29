@@ -8,7 +8,7 @@ const Home = () => {
             <h1>Ticket Summary</h1>
         </section>
           <Link to='/tasks'>
-            <button className="btn-submit">View Tickets</button>
+            <button className="btn-home">View Tickets</button>
           </Link>
         
         

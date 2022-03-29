@@ -8,6 +8,9 @@
   .btn-submit {
     @apply w-full bg-indigo-800 hover:bg-indigo-900 text-white rounded-md px-1 py-2 font-bold mt-2 mb-10;
   }
+  .btn-home {
+    @apply bg-indigo-800 hover:bg-indigo-900 text-white rounded-md px-10 py-2 font-bold mt-2 mb-10;
+  }
   .form-group {
     @apply mb-1;
   }
@@ -291,7 +294,7 @@ h3 {
 }
 
 .status-closed {
-  background-color: darkred;
+  background-color: #8b0000;
 }
 
 .ticket-page {
@@ -303,10 +306,6 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.ticket-page .btn {
-  margin-bottom: 30px;
 }
 
 .ticket-page .btn-block {
@@ -328,6 +327,8 @@ h3 {
   border-radius: 5px;
   text-align: left;
   padding: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
   margin-bottom: 20px;
   position: relative;
 }
@@ -361,9 +362,9 @@ h3 {
   border: none;
   color: #000;
   position: absolute;
-  top: 5px;
-  right: 5px;
-  font-size: 16px;
+  top: 0px;
+  right: 12px;
+  font-size: 25px;
   cursor: pointer;
 }
 
@@ -424,19 +425,21 @@ footer {
   scrollbar-width: none; /* Firefox */
 }
 
-.only-x-scrollbar::-webkit-scrollbar {
-  width: 0px;
-  border: 1px solid #fff;
-}
+@media (min-width: 376px) {
+  .only-x-scrollbar::-webkit-scrollbar {
+    width: 0px;
+    border: 1px solid #fff;
+  }
 
-.only-x-scrollbar::-webkit-scrollbar-track {
-  border-radius: 0;
-  background: #eeeeee;
-}
+  .only-x-scrollbar::-webkit-scrollbar-track {
+    border-radius: 0;
+    background: #eeeeee;
+  }
 
-.only-x-scrollbar::-webkit-scrollbar-thumb {
-  border-radius: 0;
-  background: #b0b0b0;
+  .only-x-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    background: #b0b0b0;
+  }
 }
 
 .icon {
@@ -458,6 +461,36 @@ footer {
   transform: scale(0.98);
 }
 
+.btn-red {
+  background-color: #8b0000;
+}
+
+.btn-red:hover {
+  background-color: #8b0000;
+}
+
 .menu-link:hover {
   transform: scale(0.98);
+}
+
+.btn-home:hover {
+  transform: scale(0.98);
+}
+
+@media (min-width: 410px) {
+  .btn-register {
+    margin-left: 0.5rem;
+  }
+}
+
+@media (min-width: 442px) {
+  .btn-register {
+    margin-left: 2rem;
+  }
+}
+
+@media (max-width: 410px) {
+  .btn-register {
+    margin-top: 0.5rem;
+  }
 }

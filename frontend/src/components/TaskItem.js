@@ -21,7 +21,7 @@ const TaskItem = ({ task }) => {
               </td>
               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                 <div className="flex justify-center items-center gap-1.5">
-                  <div className={`w-2.5 h-2.5 rounded-full bg-black status-${task.status}`}></div> <span>{task.status}</span>
+                  <div className={`w-2.5 h-2.5 rounded-full bg-black status-${task.status}`}></div> <span>{task.status.charAt(0).toUpperCase() + task.status.substring(1,task.status.length)}</span>
                 </div>
               </td>
               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
