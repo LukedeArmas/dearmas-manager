@@ -110,7 +110,6 @@ const Task = () => {
                 )}
             </div>
             
-
             <Modal
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
