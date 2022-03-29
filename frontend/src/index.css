@@ -481,6 +481,10 @@ footer {
   margin-left: 1.75rem;
 }
 
+div.login-container {
+  margin-left: 2rem;
+}
+
 @media (max-width: 475px) {
   .login-container {
     display: flex;
