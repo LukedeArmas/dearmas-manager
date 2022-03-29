@@ -1,4 +1,3 @@
-import Back from '../components/Back.js'
 import CommentItem from '../components/CommentItem.js'
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -29,7 +28,7 @@ Modal.setAppElement('#root')
 const override = css`
 display: block;
 margin: 0 auto;
-margin-top: 10rem;
+margin-top: 5rem;
 `
 
 const Task = () => {
@@ -73,7 +72,7 @@ const Task = () => {
     }
 
     if (isLoading || commentsIsLoading) {
-        return <ClipLoader css={override} size={150} />
+        return <ClipLoader color='#3730a3' css={override} size={250} />
     }
 
     if (isError) {
@@ -82,9 +81,8 @@ const Task = () => {
 
     return (
         <>
-        <div className='ticket-page'>
+        <div className='ticket-page max-w-[900px] mx-auto my-10'>
             <header className='ticket-head'>
-            <Back url={'/tasks'} />
             <h2>
                 Task ID: {task._id}
                 <span

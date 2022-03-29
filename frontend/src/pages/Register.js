@@ -10,7 +10,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 const override = css`
   display: block;
   margin: 0 auto;
-  margin-top: 10rem;
+  margin-top: 5rem;
 `;
 
 const Register = () => {
@@ -68,7 +68,7 @@ const Register = () => {
   }
 
   if (isLoading) {
-    return <ClipLoader css={override} size={150} />
+    return <ClipLoader css={override} size={250} />
   }
 
   return (
@@ -80,7 +80,7 @@ const Register = () => {
         <section className="form">
           <form onSubmit={onSubmit}>
             <div className="form-group">
-              <input type="text" className="form-control shadow-group" id="name" value={name} onChange={onChange} placeholder="Enter name" required />
+              <input type="text" className="form-control shadow-group" id="name" value={name} onChange={onChange} placeholder="Enter name" autoFocus required />
             </div>
             <div className="form-group">
               <input type="email" className="form-control shadow-group" id="email" value={email} onChange={onChange} placeholder="Enter email" required />

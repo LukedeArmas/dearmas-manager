@@ -8,6 +8,7 @@ const initialState = {
     task: {},
     isError: false,
     isSuccess: false,
+    isCreateTicketSuccess: false,
     isLoading: false,
     message: ''
 }
@@ -74,7 +75,7 @@ export const taskSlice = createSlice({
         })
         .addCase(createTask.fulfilled, (state, action) => {
             state.isLoading = false
-            state.isSuccess = true
+            state.isCreateTicketSuccess = true
         })
         .addCase(createTask.rejected, (state, action) => {
             state.isLoading = false

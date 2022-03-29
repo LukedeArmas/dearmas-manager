@@ -4,7 +4,7 @@ import { FaTicketAlt } from 'react-icons/fa'
 const Home = () => {
   return (
     <>
-        <section className="heading">
+        <section className="heading mt-8">
             <h1>Ticket Summary</h1>
         </section>
           <Link to='/tasks'>
