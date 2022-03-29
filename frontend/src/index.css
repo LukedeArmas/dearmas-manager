@@ -477,20 +477,17 @@ footer {
   transform: scale(0.98);
 }
 
-@media (min-width: 410px) {
-  .btn-register {
-    margin-left: 0.5rem;
-  }
+.btn-register {
+  margin-left: 1.75rem;
 }
 
-@media (min-width: 442px) {
-  .btn-register {
-    margin-left: 2rem;
+@media (max-width: 475px) {
+  .login-container {
+    display: flex;
+    flex-direction: column;
   }
-}
-
-@media (max-width: 410px) {
   .btn-register {
     margin-top: 0.5rem;
+    margin-left: 0rem;
   }
 }

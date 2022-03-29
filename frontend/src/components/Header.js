@@ -26,7 +26,7 @@ const Header = () => {
             </Link>
           </div>
             {!user ? (
-                <div className="md:flex items-center justify-end md:flex-1 lg:w-0">
+                <div className="login-container md:flex items-center justify-end md:flex-1 lg:w-0">
                     <Link to='/login' className="btn whitespace-nowrap text-base text-gray-500 hover:text-gray-900 font-bold">
                         Log in
                     </Link>

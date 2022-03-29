@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { FaTicketAlt } from 'react-icons/fa'
 
 const Home = () => {
   return (
