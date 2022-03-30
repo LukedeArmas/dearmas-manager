@@ -297,6 +297,10 @@ h3 {
   background-color: #8b0000;
 }
 
+.status-all {
+  background-color: #64748b;
+}
+
 .ticket-page {
   position: relative;
   text-align: left;
@@ -493,5 +497,45 @@ div.login-container {
   .btn-register {
     margin-top: 0.5rem;
     margin-left: 0rem;
+  }
+}
+
+.ticket-card:hover {
+  box-shadow: 0 0 11px rgb(209 213 219);
+}
+
+div.ticket-card-container {
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 1279px) {
+  div.ticket-card-container {
+    width: 60%;
+  }
+}
+
+@media (max-width: 1024px) {
+  div.ticket-card-container {
+    width: 70%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.ticket-card-container {
+    width: 40%;
+  }
+}
+
+@media (max-width: 640px) {
+  div.ticket-card-container {
+    width: 60%;
+  }
+}
+
+@media (max-width: 425px) {
+  div.ticket-card-container {
+    width: 80%;
   }
 }

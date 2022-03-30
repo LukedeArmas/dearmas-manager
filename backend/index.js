@@ -9,9 +9,18 @@ const CustomError = require('./Utils/CustomError.js')
 const userRoutes = require('./Routes/users.js')
 const taskRoutes = require('./Routes/tasks.js')
 const commentRoutes = require('./Routes/comments.js')
+const mongoSanitize = require('express-mongo-sanitize')
+const helmet = require('helmet')
 
 app.use(express.urlencoded( {extended: false}))
 app.use(express.json())
+app.use(mongoSanitize({replaceWith: '_'}))
+
+
+
+app.use(helmet())
+
+
 app.use('/users', userRoutes)
 app.use('/tasks', taskRoutes)
 app.use('/tasks/:id/comments', commentRoutes)

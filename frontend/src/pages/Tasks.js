@@ -35,8 +35,8 @@ const Tasks = () => {
     }
     return (
         <>
-            <section className="heading mt-4">
-                <h1>Tickets</h1>
+            <section className="heading mt-6">
+                <h1 className='text-3xl'>Tickets</h1>
             </section>
     <div className="flex flex-col max-w-[900px] mx-auto mb-10">
         <div className="overflow-auto h-60 sm:h-60 md:h-60 xl:h-72 2xl:h-96 only-x-scrollbar shadow-lg rounded-lg">
