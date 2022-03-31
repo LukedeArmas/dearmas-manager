@@ -591,3 +591,9 @@ textarea:focus {
     width: 85%;
   }
 }
+
+.menu-btn {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
