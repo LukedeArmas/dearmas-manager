@@ -469,9 +469,13 @@ footer {
   background-color: #8b0000;
 }
 
+/* Transition has to be on the original element, not within the pseudo class version */
+.menu-link {
+  transition: transform 250ms linear;
+}
+
 .menu-link:hover {
-  transform: scale(1.05);
-  transition-duration: 250ms;
+  transform: scale(1.03);
 }
 
 .btn-home:hover {
