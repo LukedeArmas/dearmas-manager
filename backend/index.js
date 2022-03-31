@@ -9,9 +9,14 @@ const CustomError = require('./Utils/CustomError.js')
 const userRoutes = require('./Routes/users.js')
 const taskRoutes = require('./Routes/tasks.js')
 const commentRoutes = require('./Routes/comments.js')
+const cors = require('cors')
 const mongoSanitize = require('express-mongo-sanitize')
 const helmet = require('helmet')
 
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+}))
 app.use(express.urlencoded( {extended: false}))
 app.use(express.json())
 app.use(mongoSanitize({replaceWith: '_'}))
