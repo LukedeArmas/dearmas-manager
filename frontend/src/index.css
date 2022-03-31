@@ -470,7 +470,8 @@ footer {
 }
 
 .menu-link:hover {
-  transform: scale(0.98);
+  transform: scale(1.05);
+  transition-duration: 250ms;
 }
 
 .btn-home:hover {
@@ -563,5 +564,30 @@ div.ticket-card-container {
   div.ticket-card-container,
   section.heading {
     width: 80%;
+  }
+}
+
+.modal-container {
+  width: 60vw;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+textarea {
+  outline: 1px solid #e6e6e6;
+}
+
+textarea:focus {
+  border: 1px solid #e6e6e6;
+  box-shadow: 0 0 11px #e6e6e6;
+}
+
+@media (max-width: 540px) {
+  .modal-container {
+    width: 85%;
   }
 }

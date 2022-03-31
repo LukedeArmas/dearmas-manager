@@ -1,4 +1,5 @@
 import CommentItem from '../components/CommentItem.js'
+import CommentModal from '../components/CommentModal.js'
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -8,22 +9,8 @@ import { css } from '@emotion/react'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
-import Modal from 'react-modal'
-import { FaPlus } from 'react-icons/fa'
+import { FaRegCommentAlt, FaRegTrashAlt } from 'react-icons/fa'
 
-const customStyles = {
-content: {
-    width: '60vw',
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-},
-}
-
-Modal.setAppElement('#root')
 
 const override = css`
 display: block;
@@ -32,8 +19,8 @@ margin-top: 5rem;
 `
 
 const Task = () => {
-    const [modalIsOpen, setIsOpen] = useState(false)
     const [commentText, setCommentText] = useState('')
+    const [showModal, setShowModal] = useState(false)
     const { task, isLoading, isError, message } =
         useSelector((state) => state.tasks)
 
@@ -55,19 +42,22 @@ const Task = () => {
     }, [taskId, isError, message])
 
     const onTicketClose = () => {
-        dispatch(closeTask(taskId))
-        toast.success('Task successfully closed')
-        navigate('/tasks')
+        if (window.confirm("Are you sure you want to close this ticket?")) {
+            dispatch(closeTask(taskId))
+            toast.success('Ticket successfully closed')
+            navigate('/tasks')
+        }
     }
 
-    const openModal = () => setIsOpen(true)
-    const closeModal = () => setIsOpen(false)
+    const openModal = () => setShowModal(true)
+    const closeModal = () => setShowModal(false)
+    const updateCommentText = (e) => setCommentText(e.target.value)
 
     const onCommentSubmit = (e) => {
         e.preventDefault()
         dispatch(createComment({commentText, taskId}))
         setCommentText('')
-        closeModal()
+        setShowModal(false)
         
     }
 
@@ -93,7 +83,17 @@ const Task = () => {
                 Date/Time Recorded:{' '}
                 <span className='font-normal whitespace-nowrap'>{new Date(task.createdAt).toLocaleString('en-US')}</span>
             </h3>
-            <h3>Product Type: <span className='font-normal'>{task.product}</span></h3>
+            {task.status !== 'closed' ? (
+                <div className="flex justify-between mb-4 gap-4">
+                <h3>Product Type: <span className='font-normal'>{task.product}</span></h3>
+                <button onClick={onTicketClose} className='btn whitespace-nowrap flex justify-center items-center font-semibold uppercase text-sm px-6 py-3 rounded-md shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 text-white status-closed h-[44px] self-center'>
+                    <FaRegTrashAlt size={19} /> Close Ticket
+                </button>
+            </div>
+            ) : (
+                <h3>Product Type: <span className='font-normal'>{task.product}</span></h3>
+            )}
+            
             <hr />
             <div className='ticket-desc shadow-md rounded-lg'>
                 <h3>Issue Description</h3>
@@ -104,42 +104,22 @@ const Task = () => {
             <div className="flex justify-between items-center mb-5 mt-8">
                 <h2 className='text-xl'>Comments</h2>
                 {task.status !== 'closed' && (
-                <button onClick={openModal} className='btn whitespace-nowrap inline-flex items-center justify-center px-4 py-2 rounded-md font-medium text-white bg-indigo-800 hover:bg-indigo-900 align-middle'>
-                    <FaPlus /> Add Comment
+                    <>
+                {/* <button onClick={() => setShowModal(true)} className='btn whitespace-nowrap inline-flex items-center justify-center px-4 py-2 rounded-md font-medium text-white bg-indigo-800 hover:bg-indigo-900 align-middle'>
+                    <FaRegCommentAlt className='mt-0.5' /> Add Comment
                 </button>
+                <CommentModal text={'Add Comment'} onCommentSubmit={onCommentSubmit} commentText={commentText} setCommentText={setCommentText} /> */}
+                <button
+                className="flex justify-center btn status-open text-white font-semibold uppercase text-sm px-6 py-3 rounded-md shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                type="button"
+                onClick={openModal}
+                >
+                    <FaRegCommentAlt className='mt-0.5' size={19} /> Add Comment
+                </button>
+                <CommentModal showModal={showModal} closeModal={closeModal} onCommentSubmit={onCommentSubmit} commentText={commentText} updateCommentText={updateCommentText} />
+                </>
                 )}
             </div>
-            
-            <Modal
-            isOpen={modalIsOpen}
-            onRequestClose={closeModal}
-            style={customStyles}
-            contentLabel='Add Comment'>
-            <h2>Add Comment</h2>
-            <button
-                className='btn-close'
-                onClick={closeModal}>
-                x
-            </button>
-            <form onSubmit={onCommentSubmit}>
-                <div className='form-group'>
-                <textarea
-                    name='commentText'
-                    id='commentText'
-                    className='form-control'
-                    placeholder='Comment text'
-                    value={commentText}
-                    onChange={(e) =>
-                    setCommentText(e.target.value)
-                    }></textarea>
-                </div>
-                <div className='form-group'>
-                <button className='btn-submit' type='submit'>
-                    Submit
-                </button>
-                </div>
-            </form>
-            </Modal>
 
             {comments.map((comment) => (
             <CommentItem
@@ -147,14 +127,8 @@ const Task = () => {
                 comment={comment}
             />
             ))}
-
-            {task.status !== 'closed' && (
-            <button
-                className='btn-submit btn-red'
-                onClick={onTicketClose}>
-                Close Ticket
-            </button>
-            )}
+            <br />
+            <br />
         </div>
         </>
     )
