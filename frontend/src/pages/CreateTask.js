@@ -66,7 +66,7 @@ const CreateTask = () => {
             <form onSubmit={onSubmit}>
                 <div className="form-group">
                     <label htmlFor="product">Product</label>
-                    <select name="product" id="product" className='shadow-group' value={product} onChange={(e) => setProduct(e.target.value)} autoFocus>
+                    <select name="product" id="product" className='shadow-group' value={product} onChange={(e) => setProduct(e.target.value)}>
                         <option value="Phone">Phone</option>
                         <option value="Laptop">Laptop</option>
                         <option value="Desktop">Desktop</option>

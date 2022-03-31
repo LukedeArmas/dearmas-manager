@@ -1,8 +1,38 @@
 import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import { getTaskAmounts, reset } from '../features/tasks/taskSlice.js'
+import { useSelector, useDispatch } from 'react-redux'
 import { FaRegUser, FaPlus, FaBoxOpen, FaCheck } from 'react-icons/fa'
 import { motion } from 'framer-motion'
+import { toast } from 'react-toastify'
+import { css } from "@emotion/react"
+import ClipLoader from "react-spinners/ClipLoader"
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  margin-top: 5rem;
+`
 
 const Home = () => {
+  const { taskAmounts, isSuccess, isError, message, isLoading } = useSelector(state => state.tasks)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    console.log('home useEffect')
+    dispatch(getTaskAmounts())
+    if (isError) {
+      toast.error(message)
+    }
+  }, [dispatch, isError, message])
+
+  const { totalTasks, newTasks, openTasks, closedTasks } = taskAmounts
+
+  if (isLoading) {
+        return <ClipLoader color='#3730a3' css={override} size={250} />
+        
+    }
+
   return (
     <>
         <section className="heading mt-8 w-70">
@@ -20,7 +50,7 @@ const Home = () => {
                       </div>
                       <div className='flex-1'>
                         <h2 className='text-3xl font-thin'>Total Tickets</h2>
-                        <p className='text-6xl font-medium'>5</p>
+                        <p className='text-6xl font-medium'>{ totalTasks }</p>
                       </div>
                   </div>
               </motion.div>
@@ -36,7 +66,7 @@ const Home = () => {
                       </div>
                       <div className='flex-1'>
                         <h2 className='text-3xl font-thin'>New Tickets</h2>
-                        <p className='text-6xl font-medium'>8</p>
+                        <p className='text-6xl font-medium'>{ newTasks }</p>
                       </div>
                   </div>
               </motion.div>
@@ -52,7 +82,7 @@ const Home = () => {
                       </div>
                       <div className='flex-1'>
                         <h2 className='text-3xl font-thin'>Open Tickets</h2>
-                        <p className='text-6xl font-medium'>8</p>
+                        <p className='text-6xl font-medium'>{ openTasks }</p>
                       </div>
                   </div>
               </motion.div>
@@ -68,7 +98,7 @@ const Home = () => {
                     </div>
                     <div className='flex-1'>
                       <h2 className='text-3xl font-thin'>Closed Tickets</h2>
-                      <p className='text-6xl font-medium'>8</p>
+                      <p className='text-6xl font-medium'>{ closedTasks }</p>
                     </div>
                 </div>
                 </motion.div>

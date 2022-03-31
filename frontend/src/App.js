@@ -19,7 +19,9 @@ function App() {
         <div className="w-11/12 md:w-10/12 mx-auto px-4 text-center bg-white rounded-lg h-5/6 overflow-auto no-scrollbar drop-shadow-2xl">
           <Header />
           <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<PrivateRoute />}>
+            <Route path='/' element={<Home />} />
+          </Route>
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/new-task' element={<PrivateRoute />}>

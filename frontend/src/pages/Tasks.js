@@ -20,6 +20,7 @@ const Tasks = () => {
         return () => {
             if (isSuccess) {
                 dispatch(reset())
+                console.log('task useEffect')
             }
         }
     }, [dispatch, isSuccess])

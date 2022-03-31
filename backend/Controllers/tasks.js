@@ -108,3 +108,25 @@ module.exports.updateTask = async (req, res) => {
     
     res.json(updatedTask)
 }
+
+// Get task amounts for user
+// @route  GET /tasks/amounts
+// @auth    Private
+module.exports.getTaskAmounts = async (req, res) => {
+    const user = await User.findById(req.user.id)
+    if (!user) {
+        throw new CustomError(401, 'User does not exist')
+    }
+    const totalTasks = await Task.find({ user: req.user.id }).countDocuments()
+    const newTasks = await Task.find({ user: req.user.id, status: 'new' }).countDocuments()
+    const openTasks = await Task.find({ user: req.user.id, status: 'open' }).countDocuments()
+    const closedTasks = await Task.find({ user: req.user.id, status: 'closed' }).countDocuments()
+    
+    const taskAmounts = {
+        totalTasks,
+        newTasks,
+        openTasks,
+        closedTasks
+    }
+    res.json(taskAmounts)
+}

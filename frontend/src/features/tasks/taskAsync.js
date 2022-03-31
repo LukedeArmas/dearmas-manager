@@ -24,6 +24,16 @@ const getTasks = async (jwt) => {
     return response.data
 }
 
+const getTaskAmounts = async (jwt) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${jwt}`
+        }
+    }
+    const response = await axios.get(`${taskURL}/amounts`, config)
+    return response.data
+}
+
 const getTask = async (taskId, jwt) => {
     const config = {
         headers: {
@@ -49,6 +59,7 @@ const closeTask = async (taskId, jwt) => {
 const taskAsync = {
     createTask,
     getTasks,
+    getTaskAmounts,
     getTask,
     closeTask
 }

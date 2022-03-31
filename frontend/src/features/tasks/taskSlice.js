@@ -5,6 +5,7 @@ import taskAsync from './taskAsync.js'
 
 const initialState = {
     tasks: [],
+    taskAmounts: {},
     task: {},
     isError: false,
     isSuccess: false,
@@ -32,6 +33,18 @@ export const getTasks = createAsyncThunk('tasks/getUserTasks', async (_, thunkAP
         // ThunkAPI getState() gives us access to all other redux global state, so we can get the user state (the token) from auth
         const jwt = thunkAPI.getState().auth.user.token
         return await taskAsync.getTasks(jwt)
+    } catch(e) {
+        const message = (e.response && e.response.data && e.response.data.message) || e.message || e.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// Get amount of total tickets, new tickets, open tickets, and closed tickets
+export const getTaskAmounts = createAsyncThunk('tasks/getTaskAmounts', async (_, thunkAPI) => {
+    try {
+        // ThunkAPI getState() gives us access to all other redux global state, so we can get the user state (the token) from auth
+        const jwt = thunkAPI.getState().auth.user.token
+        return await taskAsync.getTaskAmounts(jwt)
     } catch(e) {
         const message = (e.response && e.response.data && e.response.data.message) || e.message || e.toString()
         return thunkAPI.rejectWithValue(message)
@@ -91,6 +104,19 @@ export const taskSlice = createSlice({
             state.tasks = action.payload
         })
         .addCase(getTasks.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
+        })
+        .addCase(getTaskAmounts.pending, (state) => {
+            state.isLoading = true
+        })
+        .addCase(getTaskAmounts.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.isSuccess = true
+            state.taskAmounts = action.payload
+        })
+        .addCase(getTaskAmounts.rejected, (state, action) => {
             state.isLoading = false
             state.isError = true
             state.message = action.payload
