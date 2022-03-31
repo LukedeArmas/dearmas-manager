@@ -7,11 +7,18 @@ const task = require('../Models/task.js')
 // @route  GET /tasks
 // @auth    Private
 module.exports.getTasks = async (req, res) => {
+    const { type } = req.query
+    
     const user = await User.findById(req.user.id)
     if (!user) {
         throw new CustomError(401, 'User does not exist')
     }
-    const tasks = await Task.find({ user: req.user.id })
+
+    let tasks = await Task.find({ user: req.user.id })
+    // Query for certain types of tickets depending on request params
+    if (type === 'new' || type === 'open' || type === 'closed') {
+        tasks = await Task.find({ user: req.user.id, status: type })
+    }
     
     res.json(tasks)
 }

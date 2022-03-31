@@ -57,7 +57,7 @@ const Login = () => {
   }
 
   if (isLoading) {
-    return <ClipLoader css={override} size={250} />
+    return <ClipLoader color='#3730a3' css={override} size={250} />
   }
 
   return (
