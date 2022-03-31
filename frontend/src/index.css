@@ -61,7 +61,7 @@ h1,
 h2,
 h3 {
   font-weight: 600;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 /* .container {
@@ -76,7 +76,7 @@ h3 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 0;
+  padding: 30px 0;
   border-bottom: 1px solid #e6e6e6;
   margin-bottom: 60px;
 }
@@ -196,9 +196,6 @@ h3 {
   justify-content: center;
 } */
 
-.btn {
-}
-
 .btn svg {
   margin-right: 8px;
 }
@@ -229,7 +226,7 @@ h3 {
 }
 
 .btn:hover {
-  transform: scale(0.98);
+  transform: scale(1.05);
 }
 
 .ticket-created {
@@ -286,7 +283,7 @@ h3 {
 }
 
 .status-new {
-  background-color: green;
+  background-color: #22c55e;
 }
 
 .status-open {
@@ -294,11 +291,11 @@ h3 {
 }
 
 .status-closed {
-  background-color: #8b0000;
+  background-color: #dc2626;
 }
 
 .status-all {
-  background-color: #64748b;
+  background-color: #9ca3af;
 }
 
 .ticket-page {
@@ -408,8 +405,7 @@ footer {
     width: 90%;
   }
 
-  .ticket-created h2,
-  .heading h1 {
+  .ticket-created h2 {
     font-size: 2.5rem;
   }
 
@@ -500,8 +496,30 @@ div.login-container {
   }
 }
 
-.ticket-card:hover {
-  box-shadow: 0 0 11px rgb(209 213 219);
+.ticket-card {
+  color: rgb(255 255 255);
+}
+
+.ticket-card.status-new:hover {
+  box-shadow: 0 0 11px #22c55e;
+}
+
+.ticket-card.status-open:hover {
+  box-shadow: 0 0 11px #3730a3;
+}
+
+.ticket-card.status-closed:hover {
+  box-shadow: 0 0 11px #dc2626;
+}
+
+.ticket-card.status-all:hover {
+  box-shadow: 0 0 11px #9ca3af;
+}
+
+section.heading {
+  margin: 30px auto;
+  width: 80%;
+  padding-left: 1rem;
 }
 
 div.ticket-card-container {
@@ -511,31 +529,39 @@ div.ticket-card-container {
 }
 
 @media (max-width: 1279px) {
-  div.ticket-card-container {
+  div.ticket-card-container,
+  section.heading {
     width: 60%;
   }
 }
 
 @media (max-width: 1024px) {
-  div.ticket-card-container {
+  div.ticket-card-container,
+  section.heading {
     width: 70%;
   }
 }
 
 @media (max-width: 767px) {
-  div.ticket-card-container {
+  div.ticket-card-container,
+  section.heading {
     width: 40%;
+  }
+  h1.text-left {
+    text-align: center;
   }
 }
 
 @media (max-width: 640px) {
-  div.ticket-card-container {
+  div.ticket-card-container,
+  section.heading {
     width: 60%;
   }
 }
 
 @media (max-width: 425px) {
-  div.ticket-card-container {
+  div.ticket-card-container,
+  section.heading {
     width: 80%;
   }
 }
