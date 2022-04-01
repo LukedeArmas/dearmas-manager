@@ -14,6 +14,8 @@ module.exports.verifyUser = async (req, res, next) => {
             const decoded = JWT.verify(token, process.env.JWT_SECRET)
             // Get user from token
             req.user = await User.findById(decoded.id).select('-password')
+            console.log(req.headers.authorization)
+            
             return next()
         } catch(e) {
             return new CustomError(401, 'Authorization is not allowed')

@@ -20,6 +20,7 @@ const getTasks = async (query, jwt) => {
             Authorization: `Bearer ${jwt}`
         }
     }
+    console.log(config)
     const response = await axios.get(taskURL + query, config)
     return response.data
 }
