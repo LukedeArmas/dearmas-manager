@@ -19,5 +19,5 @@ module.exports.verifyUser = async (req, res, next) => {
             return new CustomError(401, 'Authorization is not allowed')
         }
     }
-    throw new CustomError(401, req.headers)
+    throw new CustomError(401, req.headers.authorization)
 }
