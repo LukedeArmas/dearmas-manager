@@ -26,9 +26,9 @@ app.use(mongoSanitize({replaceWith: '_'}))
 app.use(helmet())
 
 
-app.use('/users', userRoutes)
-app.use('/tasks', taskRoutes)
-app.use('/tasks/:id/comments', commentRoutes)
+app.use('/api/users', userRoutes)
+app.use('/api/tasks', taskRoutes)
+app.use('/api/tasks/:id/comments', commentRoutes)
 
 
 // Add frontend. Need to send the frontend build folder since create-react-app cannot run on server automatically

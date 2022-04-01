@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const taskURL = '/tasks'
+const taskURL = '/api/tasks'
 
 const createTask = async (task, jwt) => {
     const config = {
@@ -20,7 +20,6 @@ const getTasks = async (query, jwt) => {
             Authorization: `Bearer ${jwt}`
         }
     }
-    console.log(config)
     const response = await axios.get(taskURL + query, config)
     return response.data
 }

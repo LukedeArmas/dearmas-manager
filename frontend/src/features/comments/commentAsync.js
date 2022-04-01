@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const URL = '/tasks'
+const URL = '/api/tasks'
 
 
 const getComments = async (taskId, jwt) => {

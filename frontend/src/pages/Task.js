@@ -51,14 +51,8 @@ const Task = () => {
         if (isError) {
         toast.error(message)
         }        
-        if (createCommentIsSuccess) {
-            toast.success('Successfully created comment')
-        }
-        if (updateCommentIsSuccess) {
-            toast.success('Successfully updated comment')
-        }
-        if (deleteCommentIsSuccess) {
-            toast.success('Successfully deleted comment')
+        if (createCommentIsSuccess || updateCommentIsSuccess || deleteCommentIsSuccess) {
+            toast.success('Success!')
         }
         dispatch(getTask(taskId))
         dispatch(getComments(taskId))
