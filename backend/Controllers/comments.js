@@ -14,7 +14,7 @@ module.exports.getComments = async (req, res) => {
     }
     const task = await Task.findById(id)
     if (!task) {
-        throw new CustomError(400, 'Task does not exist')
+        throw new CustomError(400, 'Ticket does not exist')
     }
     
     if (task.user._id.toString() !== req.user.id) {
@@ -39,7 +39,7 @@ module.exports.createComment = async (req, res) => {
     }
     const task = await Task.findById(id)
     if (!task) {
-        throw new CustomError(400, 'Task does not exist')
+        throw new CustomError(400, 'Ticket does not exist')
     }
     
     if (task.user._id.toString() !== req.user.id) {
@@ -54,4 +54,58 @@ module.exports.createComment = async (req, res) => {
     }).save()
     
     res.json(comment)
+}
+
+// Delete comment for user
+// @route  DELETE /tasks/:id/comments/:commentId
+// @auth    Private
+module.exports.deleteComment = async (req, res) => {
+    const { id, commentId } = req.params
+    // User handled in auth middleware
+
+    const task = await Task.findById(id)
+    if (!task) {
+        throw new CustomError(400, 'Ticket does not exist')
+    }
+    if (task.user._id.toString() !== req.user.id) {
+        throw new CustomError(401, 'No Authorization')
+    }
+    const comment = await Comment.findById(commentId)
+    if (!comment) {
+        throw new CustomError(400, 'Comment does not exist')
+    }
+    if (comment.user._id.toString() !== req.user.id) {
+        throw new CustomError(401, 'No Authorization')
+    }
+    if (comment.task._id.toString() !== task._id.toString()) {
+        throw new CustomError(403, 'Must delete a comment for this specific ticket')
+    }
+
+    await comment.remove()
+
+    res.json({success: true})
+}
+
+
+// Update comment for user
+// @route  PUT /tasks/:id/comments/:commentId
+// @auth    Private
+module.exports.updateComment = async (req, res) => {
+    const { id, commentId } = req.params
+    const user = await User.findById(req.user.id)
+    if (!user) {
+        throw new CustomError(401, 'User does not exist')
+    }
+    const task = await Task.findById(id)
+    if (!task) {
+        throw new CustomError(400, 'Task does not exist')
+    }
+    
+    if (task.user._id.toString() !== req.user.id) {
+        throw new CustomError(401, 'No Authorization')
+    }
+
+    const updatedTask = await Task.findByIdAndUpdate(id, req.body, { new: true })
+    
+    res.json(updatedTask)
 }

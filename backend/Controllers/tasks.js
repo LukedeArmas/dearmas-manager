@@ -81,7 +81,6 @@ module.exports.deleteTask = async (req, res) => {
     if (!task) {
         throw new CustomError(400, 'Task does not exist')
     }
-
     
     if (task.user._id.toString() !== req.user.id) {
         throw new CustomError(401, 'No Authorization')
