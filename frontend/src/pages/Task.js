@@ -1,7 +1,7 @@
 import CommentItem from '../components/CommentItem.js'
 import CommentModal from '../components/CommentModal.js'
 import { useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { getTask, closeTask } from '../features/tasks/taskSlice.js'
 import { createComment, getComments} from '../features/comments/commentSlice.js'
@@ -10,6 +10,7 @@ import ClipLoader from 'react-spinners/ClipLoader'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { FaRegCommentAlt, FaRegTrashAlt } from 'react-icons/fa'
+import Back from '../components/Back.js'
 
 
 const override = css`
@@ -30,6 +31,8 @@ const Task = () => {
     const dispatch = useDispatch()
     const { taskId } = useParams()
     const navigate = useNavigate()
+    const location = useLocation()
+    const { prevUrl } = location.state
 
     useEffect(() => {
         if (isError) {
@@ -66,13 +69,14 @@ const Task = () => {
     }
 
     if (isError) {
-        ;<h3>Something went wrong</h3>
+        return <h3>Something went wrong</h3>
     }
 
     return (
         <>
-        <div className='ticket-page max-w-[900px] mx-auto mt-10'>
-            <header className='ticket-head'>
+        <div className='ticket-page max-w-[900px] mx-auto mt-3'>
+            <Back url={prevUrl} />
+            <header className='ticket-head mt-3'>
             <h2>
                 <span>Ticket ID Number: <span className='font-normal'>{task._id}</span></span>
                 <div className="flex justify-center items-center gap-1.5">
@@ -104,20 +108,16 @@ const Task = () => {
             <div className="flex justify-between items-center mb-5 mt-8">
                 <h2 className='text-xl'>Comments</h2>
                 {task.status !== 'closed' && (
-                    <>
-                {/* <button onClick={() => setShowModal(true)} className='btn whitespace-nowrap inline-flex items-center justify-center px-4 py-2 rounded-md font-medium text-white bg-indigo-800 hover:bg-indigo-900 align-middle'>
-                    <FaRegCommentAlt className='mt-0.5' /> Add Comment
-                </button>
-                <CommentModal text={'Add Comment'} onCommentSubmit={onCommentSubmit} commentText={commentText} setCommentText={setCommentText} /> */}
-                <button
-                className="flex justify-center btn status-open text-white font-semibold uppercase text-sm px-6 py-3 rounded-md shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                type="button"
-                onClick={openModal}
-                >
-                    <FaRegCommentAlt className='mt-0.5' size={19} /> Add Comment
-                </button>
-                <CommentModal showModal={showModal} closeModal={closeModal} onCommentSubmit={onCommentSubmit} commentText={commentText} updateCommentText={updateCommentText} />
-                </>
+                <>
+                    <button
+                    className="flex justify-center btn status-open text-white font-semibold uppercase text-sm px-6 py-3 rounded-md shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={openModal}
+                    >
+                        <FaRegCommentAlt className='mt-0.5' size={19} /> Add Comment
+                    </button>
+                    <CommentModal showModal={showModal} closeModal={closeModal} onCommentSubmit={onCommentSubmit} commentText={commentText} updateCommentText={updateCommentText} />
+                    </>
                 )}
             </div>
 

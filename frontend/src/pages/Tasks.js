@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useLocation } from 'react-router-dom'
 import { getTasks, reset } from '../features/tasks/taskSlice.js'
 import TaskItem from '../components/TaskItem.js';
 import { css } from "@emotion/react";
@@ -16,7 +16,9 @@ const Tasks = () => {
     const [searchParams] = useSearchParams()
     const { tasks, isSuccess, isLoading} = useSelector(state => state.tasks)
     const dispatch = useDispatch()
-
+    const location = useLocation()
+    const query = searchParams.get('type') ? `?type=${searchParams.get('type')}` : ''
+    
     // Need two separate useEffects otherwise tasks/pending and tasks/fulfilled runs twice for some reason
     useEffect(() => {
         return () => {
@@ -27,9 +29,8 @@ const Tasks = () => {
     }, [dispatch, isSuccess])
 
     useEffect(() => {
-        const query = `?type=${searchParams.get('type')}` || ''
         dispatch(getTasks(query))
-    }, [dispatch, searchParams])
+    }, [dispatch, searchParams, query])
 
 
     if (isLoading) {
@@ -64,7 +65,7 @@ const Tasks = () => {
                 </thead>
                 <tbody>
                         {tasks.map((task) => (
-                            <TaskItem key={task._id} task={task} />
+                            <TaskItem key={task._id} task={task} prevUrl={location.pathname + query} />
                         ))}
                 </tbody>
                 </table>
