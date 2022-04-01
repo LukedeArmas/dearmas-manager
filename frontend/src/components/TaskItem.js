@@ -20,7 +20,7 @@ const TaskItem = ({ task, prevUrl }) => {
                   className="menu-btn inline-flex justify-center items-center btn status-open text-white  text-sm px-4 py-2 rounded-md shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 mt-1"
                   type="button"
                   >
-                    <span className='whitespace-nowrap flex-none'>View</span>
+                    <span className='whitespace-nowrap flex-none font-medium'>View</span>
                 </Link>
               </td>
             </tr>
