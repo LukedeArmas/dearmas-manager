@@ -92,20 +92,27 @@ module.exports.deleteComment = async (req, res) => {
 // @auth    Private
 module.exports.updateComment = async (req, res) => {
     const { id, commentId } = req.params
-    const user = await User.findById(req.user.id)
-    if (!user) {
-        throw new CustomError(401, 'User does not exist')
-    }
+
     const task = await Task.findById(id)
     if (!task) {
         throw new CustomError(400, 'Task does not exist')
     }
-    
     if (task.user._id.toString() !== req.user.id) {
         throw new CustomError(401, 'No Authorization')
     }
 
-    const updatedTask = await Task.findByIdAndUpdate(id, req.body, { new: true })
+    const comment = await Comment.findById(commentId)
+    if (!comment) {
+        throw new CustomError(400, 'Comment does not exist')
+    }
+    if (comment.user._id.toString() !== req.user.id) {
+        throw new CustomError(401, 'No Authorization')
+    }
+    if (comment.task._id.toString() !== task._id.toString()) {
+        throw new CustomError(403, 'Must edit a comment for this specific ticket')
+    }
+
+    const updatedComment = await Comment.findByIdAndUpdate(commentId, req.body, { new: true })
     
-    res.json(updatedTask)
+    res.json(updatedComment)
 }
