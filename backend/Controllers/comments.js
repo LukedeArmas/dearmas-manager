@@ -56,6 +56,36 @@ module.exports.createComment = async (req, res) => {
     res.json(comment)
 }
 
+
+// Get comment for task
+// @route  GET /tasks/:id/comments/:commentId
+// @auth    Private
+module.exports.getComment = async (req, res) => {
+    const { id, commentId } = req.params
+
+    const task = await Task.findById(id)
+    if (!task) {
+        throw new CustomError(400, 'Ticket does not exist')
+    }
+    if (task.user._id.toString() !== req.user.id) {
+        throw new CustomError(401, 'No Authorization')
+    }
+
+    const comment = await Comment.findById(commentId)
+    if (!comment) {
+        throw new CustomError(400, 'Comment does not exist')
+    }
+    if (comment.user._id.toString() !== req.user.id) {
+        throw new CustomError(401, 'No Authorization')
+    }
+    if (comment.task._id.toString() !== task._id.toString()) {
+        throw new CustomError(403, 'Comment must be for this specific ticket')
+    }
+    
+    res.json(comment)
+}
+
+
 // Delete comment for user
 // @route  DELETE /tasks/:id/comments/:commentId
 // @auth    Private
