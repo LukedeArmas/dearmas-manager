@@ -28,11 +28,11 @@ export const createTask = createAsyncThunk('tasks/createTask', async (task, thun
 
 
 // Get all user tasks
-export const getTasks = createAsyncThunk('tasks/getUserTasks', async (_, thunkAPI) => {
+export const getTasks = createAsyncThunk('tasks/getUserTasks', async (query, thunkAPI) => {
     try {
         // ThunkAPI getState() gives us access to all other redux global state, so we can get the user state (the token) from auth
         const jwt = thunkAPI.getState().auth.user.token
-        return await taskAsync.getTasks(jwt)
+        return await taskAsync.getTasks(query, jwt)
     } catch(e) {
         const message = (e.response && e.response.data && e.response.data.message) || e.message || e.toString()
         return thunkAPI.rejectWithValue(message)

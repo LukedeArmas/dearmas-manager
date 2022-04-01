@@ -13,14 +13,14 @@ const createTask = async (task, jwt) => {
     return response.data
 }
 
-const getTasks = async (jwt) => {
+const getTasks = async (query, jwt) => {
     const config = {
         headers: {
             // We need it like this because this is how the api gets the token in the backend (with .split(' '))
             Authorization: `Bearer ${jwt}`
         }
     }
-    const response = await axios.get(taskURL, config)
+    const response = await axios.get(taskURL + query, config)
     return response.data
 }
 

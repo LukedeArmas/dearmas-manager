@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 import { getTasks, reset } from '../features/tasks/taskSlice.js'
 import TaskItem from '../components/TaskItem.js';
 import { css } from "@emotion/react";
@@ -12,6 +13,7 @@ const override = css`
 `;
 
 const Tasks = () => {
+    const [searchParams] = useSearchParams()
     const { tasks, isSuccess, isLoading} = useSelector(state => state.tasks)
     const dispatch = useDispatch()
 
@@ -20,14 +22,14 @@ const Tasks = () => {
         return () => {
             if (isSuccess) {
                 dispatch(reset())
-                console.log('task useEffect')
             }
         }
     }, [dispatch, isSuccess])
 
     useEffect(() => {
-        dispatch(getTasks())
-    }, [dispatch])
+        const query = `?type=${searchParams.get('type')}` || ''
+        dispatch(getTasks(query))
+    }, [dispatch, searchParams])
 
 
     if (isLoading) {
@@ -37,7 +39,7 @@ const Tasks = () => {
     return (
         <>
             <section className="heading mt-6">
-                <h1 className='text-4xl'>All Tickets</h1>
+                <h1 className='text-4xl'>{ searchParams.get('type') ? searchParams.get('type').charAt(0).toUpperCase() + searchParams.get('type').slice(1) : 'All' } Tickets</h1>
             </section>
     <div className="flex flex-col md:max-w-[550px] lg:max-w-[700px] xl:max-w-[900px] mx-auto mb-10">
         <div className="overflow-auto h-60 sm:h-60 md:h-60 xl:h-96 2xl:h-[30rem] only-x-scrollbar shadow-lg rounded-lg">

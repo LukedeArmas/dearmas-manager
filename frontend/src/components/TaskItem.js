@@ -2,16 +2,6 @@ import { Link } from 'react-router-dom'
 
 const TaskItem = ({ task }) => {
   return (
-    // <div className="ticket">
-    //     <div>{new Date(task.createdAt).toLocaleString('en-US')}</div>
-    //     <div>{task.product}</div>
-    //     <div className={`status status-${task.status}`}>
-    //         {task.status}
-    //     </div>
-    //     <Link to={`/tasks/${task._id}`} className='btn btn-reverse btn-sm' >
-    //         View
-    //     </Link>
-    // </div>
     <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                 {new Date(task.createdAt).toLocaleDateString('en-Us')}
@@ -25,8 +15,11 @@ const TaskItem = ({ task }) => {
                 </div>
               </td>
               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                <Link to={`/tasks/${task._id}`} className="btn whitespace-nowrap inline-flex items-center justify-center px-4 py-2 rounded-md font-medium text-white bg-indigo-800 hover:bg-indigo-900" >
-                  View
+                <Link to={`/tasks/${task._id}`}
+                  className="menu-btn inline-flex justify-center items-center btn status-open text-white  text-sm px-4 py-2 rounded-md shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 mt-1"
+                  type="button"
+                  >
+                    <span className='whitespace-nowrap flex-none'>View</span>
                 </Link>
               </td>
             </tr>

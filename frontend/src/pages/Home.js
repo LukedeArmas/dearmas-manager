@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useEffect } from 'react'
-import { getTaskAmounts, reset } from '../features/tasks/taskSlice.js'
+import { getTaskAmounts } from '../features/tasks/taskSlice.js'
 import { useSelector, useDispatch } from 'react-redux'
 import { FaRegUser, FaPlus, FaBoxOpen, FaCheck } from 'react-icons/fa'
 import { motion } from 'framer-motion'
@@ -15,11 +15,10 @@ const override = css`
 `
 
 const Home = () => {
-  const { taskAmounts, isSuccess, isError, message, isLoading } = useSelector(state => state.tasks)
+  const { taskAmounts, isError, message, isLoading } = useSelector(state => state.tasks)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log('home useEffect')
     dispatch(getTaskAmounts())
     if (isError) {
       toast.error(message)
@@ -55,7 +54,7 @@ const Home = () => {
                   </div>
               </motion.div>
             </Link>
-            <Link to='/tasks' className="ticket-card">
+            <Link to='/tasks?type=new' className="ticket-card">
               <motion.div
                 whileHover={{ scale: 1.1,}}
                 className="rounded-lg text-left px-6 pt-8 pb-12 status-new"
@@ -71,7 +70,7 @@ const Home = () => {
                   </div>
               </motion.div>
             </Link>
-            <Link to='/tasks' className="ticket-card">
+            <Link to='/tasks?type=open' className="ticket-card">
               <motion.div
                 whileHover={{ scale: 1.1,}}
                 className="rounded-lg text-left px-6 pt-8 pb-12 status-open"
@@ -87,7 +86,7 @@ const Home = () => {
                   </div>
               </motion.div>
             </Link>
-            <Link to='/tasks' className='ticket-card'>
+            <Link to='/tasks?type=closed' className='ticket-card'>
               <motion.div
                 whileHover={{ scale: 1.1,}}
                 className="rounded-lg text-left px-6 pt-8 pb-12 status-closed"
