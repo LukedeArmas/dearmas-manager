@@ -209,6 +209,7 @@ const Task = () => {
                     </>
                 )}
             </div>
+            {!comments.length && ( <p className='text-lg'>No comments</p> )}
             {comments.map((comment) => (
                     <CommentItem
                     key={comment._id}
