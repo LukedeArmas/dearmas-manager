@@ -16,8 +16,7 @@ module.exports.verifyUser = async (req, res, next) => {
             req.user = await User.findById(decoded.id).select('-password')
             return next()
         } catch(e) {
-            console.log(e)
-            return new CustomError(401, e)
+            return new CustomError(401, 'Authorization is not allowed')
         }
     }
     throw new CustomError(401, req.headers)
