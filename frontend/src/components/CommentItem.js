@@ -1,15 +1,13 @@
-import { useSelector } from 'react-redux'
 
-const CommentItem = ({ comment }) => {
-    const { user } = useSelector((state) => state.auth)
-
+const CommentItem = ({ comment, onShowComment }) => {
+    
     return (
-        <div className="note overflow-auto shadow-md rounded-lg" style={{
+        <div className="comment overflow-auto shadow-md rounded-lg" onClick={() => onShowComment(comment)} style={{
             backgroundColor: comment.isStaff ? 'rgba(0,0,0,0.7)' : '#fff',
             color: comment.isStaff ? '#fff' : '#000'
         }}>
             <div className="flex justify-between mb-2">
-                <h4>{comment.isStaff ? (<>Staff: <span className='font-semibold whitespace-nowrap'>Staff</span> </>)  : (<>Customer: <span className='font-semibold whitespace-nowrap'>{user.name}</span></>)  }</h4>
+                <h4>{comment.isStaff ? (<>Staff: <span className='font-semibold whitespace-nowrap'>Staff</span> </>)  : (<>Customer: <span className='font-semibold whitespace-nowrap'>{comment.user.name}</span></>)  }</h4>
                 <div className="font-thin text-sm">
                     <span className='whitespace-nowrap'>{new Date(comment.createdAt).toLocaleString('en-US')}</span>
                 </div>

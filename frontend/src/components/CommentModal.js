@@ -8,7 +8,7 @@ content: {
 
 Modal.setAppElement('#root')
 
-const CommentModal = ({ showModal, openModal, closeModal, onCommentSubmit, commentText, updateCommentText }) => {
+const CommentModal = ({ showModal, closeModal, onCommentSubmit, commentText, updateCommentText }) => {
   
   return (
       <Modal

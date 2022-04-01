@@ -21,7 +21,7 @@ module.exports.getComments = async (req, res) => {
         throw new CustomError(401, 'No Authorization')
     }
 
-    const comments = await Comment.find({ task: id })
+    const comments = await Comment.find({ task: id }).populate('user')
     
     res.json(comments)
 }
@@ -52,8 +52,9 @@ module.exports.createComment = async (req, res) => {
         text: text,
         isStaff: false 
     }).save()
+    const populatedComment = await comment.populate('user')
     
-    res.json(comment)
+    res.json(populatedComment)
 }
 
 
@@ -111,9 +112,9 @@ module.exports.deleteComment = async (req, res) => {
         throw new CustomError(403, 'Must delete a comment for this specific ticket')
     }
 
-    await comment.remove()
+    const removedComment = await comment.remove()
 
-    res.json({success: true})
+    res.json(removedComment)
 }
 
 
