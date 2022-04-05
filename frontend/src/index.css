@@ -323,12 +323,29 @@ h2, h3 {
   margin-bottom: 20px;
   position: relative;
   transition: transform 100ms linear;
-  z-index: 2;
 }
 
 .comment:hover {
   transform: scale(0.98);
   background-color: rgb(243 244 246) !important;
+  cursor: pointer;
+}
+
+.comment-staff {
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  text-align: left;
+  padding: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  position: relative;
+  transition: transform 100ms linear;
+}
+
+.comment-staff:hover {
+  transform: scale(0.98);
+  background-color: #312e81 !important;
   cursor: pointer;
 }
 

@@ -17,7 +17,7 @@ module.exports.getComments = async (req, res) => {
         throw new CustomError(400, 'Ticket does not exist')
     }
     
-    if (task.user._id.toString() !== req.user.id) {
+    if (task.user._id.toString() !== req.user.id && req.user.isAdmin === false) {
         throw new CustomError(401, 'No Authorization')
     }
 
@@ -42,7 +42,7 @@ module.exports.createComment = async (req, res) => {
         throw new CustomError(400, 'Ticket does not exist')
     }
     
-    if (task.user._id.toString() !== req.user.id) {
+    if (task.user._id.toString() !== req.user.id && req.user.isAdmin === false) {
         throw new CustomError(401, 'No Authorization')
     }
 
@@ -50,7 +50,7 @@ module.exports.createComment = async (req, res) => {
         user: req.user.id, 
         task: id, 
         text: text,
-        isStaff: false 
+        isStaff: req.user.isAdmin ? true : false 
     }).save()
     const populatedComment = await comment.populate('user')
     
@@ -71,12 +71,11 @@ module.exports.getComment = async (req, res) => {
     if (task.user._id.toString() !== req.user.id) {
         throw new CustomError(401, 'No Authorization')
     }
-
     const comment = await Comment.findById(commentId)
     if (!comment) {
         throw new CustomError(400, 'Comment does not exist')
     }
-    if (comment.user._id.toString() !== req.user.id) {
+    if (comment.user._id.toString() !== req.user.id && req.user.isAdmin === false) {
         throw new CustomError(401, 'No Authorization')
     }
     if (comment.task._id.toString() !== task._id.toString()) {
