@@ -1,23 +1,24 @@
 const User = require('../Models/user.js')
 const Task = require('../Models/task.js')
 const CustomError = require('../Utils/CustomError.js')
-const task = require('../Models/task.js')
 
 // Get tasks for user
 // @route  GET /tasks
 // @auth    Private
 module.exports.getTasks = async (req, res) => {
     const { type } = req.query
-    
+    let query = {}
     const user = await User.findById(req.user.id)
     if (!user) {
         throw new CustomError(401, 'User does not exist')
     }
-
-    let tasks = await Task.find({ user: req.user.id })
+    if (user.isAdmin === false) {
+        query = { user: req.user.id }
+    }
+    let tasks = await Task.find({ ...query })
     // Query for certain types of tickets depending on request params
     if (type === 'new' || type === 'open' || type === 'closed') {
-        tasks = await Task.find({ user: req.user.id, status: type })
+        tasks = await Task.find({ ...query, status: type })
     }
     
     res.json(tasks)
@@ -60,8 +61,7 @@ module.exports.getTask = async (req, res) => {
     if (!task) {
         throw new CustomError(400, 'Task does not exist')
     }
-    
-    if (task.user._id.toString() !== req.user.id) {
+    if (task.user._id.toString() !== req.user.id && req.user.isAdmin === false) {
         throw new CustomError(401, 'No Authorization')
     }
 
@@ -82,7 +82,7 @@ module.exports.deleteTask = async (req, res) => {
         throw new CustomError(400, 'Task does not exist')
     }
     
-    if (task.user._id.toString() !== req.user.id) {
+    if (task.user._id.toString() !== req.user.id && req.user.isAdmin === false) {
         throw new CustomError(401, 'No Authorization')
     }
 
@@ -106,7 +106,7 @@ module.exports.updateTask = async (req, res) => {
         throw new CustomError(400, 'Task does not exist')
     }
     
-    if (task.user._id.toString() !== req.user.id) {
+    if (task.user._id.toString() !== req.user.id && req.user.isAdmin === false) {
         throw new CustomError(401, 'No Authorization')
     }
 
@@ -123,10 +123,14 @@ module.exports.getTaskAmounts = async (req, res) => {
     if (!user) {
         throw new CustomError(401, 'User does not exist')
     }
-    const totalTasks = await Task.find({ user: req.user.id }).countDocuments()
-    const newTasks = await Task.find({ user: req.user.id, status: 'new' }).countDocuments()
-    const openTasks = await Task.find({ user: req.user.id, status: 'open' }).countDocuments()
-    const closedTasks = await Task.find({ user: req.user.id, status: 'closed' }).countDocuments()
+    let query = {}
+    if (user.isAdmin === false) {
+        query = {user: req.user.id}
+    }
+    const totalTasks = await Task.find({ ...query }).countDocuments()
+    const newTasks = await Task.find({ ...query, status: 'new' }).countDocuments()
+    const openTasks = await Task.find({ ...query, status: 'open' }).countDocuments()
+    const closedTasks = await Task.find({ ...query, status: 'closed' }).countDocuments()
     
     const taskAmounts = {
         totalTasks,
