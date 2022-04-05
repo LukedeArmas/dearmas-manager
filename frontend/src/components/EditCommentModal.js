@@ -10,9 +10,9 @@ content: {
 
 Modal.setAppElement('#root')
 
-const EditCommentModal = ({ showComment, closeComment, onEditCommentSubmit, comment, updateEditComment, deleteComment }) => {
+const EditCommentModal = ({ showComment, closeComment, onEditCommentSubmit, comment, updateEditComment, deleteComment, user }) => {
   const [allowCommentEdit, setAllowCommentEdit] = useState(false)
-
+  
   return (
   <Modal
           isOpen={showComment}
@@ -28,7 +28,8 @@ const EditCommentModal = ({ showComment, closeComment, onEditCommentSubmit, comm
                     <h3 className="text-3xl font-semibold mb-2">
                       <span className='whitespace-nowrap'>{ allowCommentEdit ? 'Edit' : 'View' } Comment</span>
                     </h3>
-                    <div className='flex items-center max-w-xs'>
+                    {/* Hide edit and delete buttons for customer if the comment is not theirs */}
+                    <div className={ (comment.user?._id !== user._id && !user.isStaff ? 'hide ' : '') + 'flex items-center max-w-xs'}>
                       {allowCommentEdit ? (
                       <>
                       <button
@@ -74,8 +75,9 @@ const EditCommentModal = ({ showComment, closeComment, onEditCommentSubmit, comm
                     >
                       Close
                     </button>
+                    {/* Hide save button for customer if the comment is not theirs */}
                     <button
-                      className="btn status-open text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      className={(comment.user?._id !== user._id && !user.isStaff ? 'hide ' : '') + "btn status-open text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"}
                       type="button"
                       onClick={(e) => {
                         setAllowCommentEdit(false)

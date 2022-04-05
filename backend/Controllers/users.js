@@ -34,6 +34,7 @@ module.exports.register = async (req, res) => {
             _id: newUser._id,
             name: newUser.name,
             email: newUser.email,
+            isStaff: newUser.isAdmin,
             token: createJsonWebToken(newUser._id)
         })
 }
@@ -58,6 +59,7 @@ module.exports.login = async (req, res) => {
         _id: user._id,
         name: user.name, 
         email: user.email,
+        isStaff: user.isAdmin,
         token: createJsonWebToken(user._id)
     })
 }

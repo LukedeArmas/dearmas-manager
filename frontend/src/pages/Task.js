@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { getTask, closeTask } from '../features/tasks/taskSlice.js'
-import { createComment, getComments, updateComment, deleteComment, reset } from '../features/comments/commentSlice.js'
+import { createComment, getComments, updateComment, deleteComment, reset, resetSuccess } from '../features/comments/commentSlice.js'
 import { css } from '@emotion/react'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { useEffect } from 'react'
@@ -33,7 +33,9 @@ const Task = () => {
         updatedAt: ''
     })
 
-    const { task, isSuccess, isLoading, isError, message } =
+    const { user } = useSelector((state) => state.auth)
+
+    const { task, isLoading, isError, message } =
         useSelector((state) => state.tasks)
 
     const { comments, isLoading: commentsIsLoading, updateCommentIsSuccess, createCommentIsSuccess, deleteCommentIsSuccess } =
@@ -53,6 +55,7 @@ const Task = () => {
         }        
         if (createCommentIsSuccess || updateCommentIsSuccess || deleteCommentIsSuccess) {
             toast.success('Success!')
+            dispatch(resetSuccess())
         }
         dispatch(getTask(taskId))
         dispatch(getComments(taskId))
@@ -199,7 +202,7 @@ const Task = () => {
                     </button>
                     <CommentModal showModal={showModal} closeModal={closeModal} onCommentSubmit={onCommentSubmit} commentText={commentText} updateCommentText={updateCommentText} />
 
-                    <EditCommentModal showComment={showComment} closeComment={onCloseComment} onEditCommentSubmit={onEditCommentSubmit} comment={comment} updateEditComment={updateEditComment} deleteComment={deleteCommentSubmit} />
+                    <EditCommentModal showComment={showComment} closeComment={onCloseComment} onEditCommentSubmit={onEditCommentSubmit} comment={comment} updateEditComment={updateEditComment} deleteComment={deleteCommentSubmit} user={user} />
                     </>
                 )}
             </div>

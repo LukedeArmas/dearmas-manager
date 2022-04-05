@@ -599,3 +599,7 @@ textarea:focus {
     gap: 1rem;
   }
 }
+
+.hide {
+  display: none;
+}
