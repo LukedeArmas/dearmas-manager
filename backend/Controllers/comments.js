@@ -21,7 +21,7 @@ module.exports.getComments = async (req, res) => {
         throw new CustomError(401, 'No Authorization')
     }
 
-    const comments = await Comment.find({ task: id }).populate('user')
+    const comments = await Comment.find({ task: id }).sort({ createdAt: -1 }).populate('user')
     
     res.json(comments)
 }

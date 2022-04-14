@@ -15,11 +15,12 @@ module.exports.getTasks = async (req, res) => {
     if (user.isAdmin === false) {
         query = { user: req.user.id }
     }
-    let tasks = await Task.find({ ...query })
     // Query for certain types of tickets depending on request params
     if (type === 'new' || type === 'open' || type === 'closed') {
-        tasks = await Task.find({ ...query, status: type })
+        query.status = type
     }
+
+    const tasks = await Task.find({ ...query }).sort({ createdAt: -1 })
     
     res.json(tasks)
 }
